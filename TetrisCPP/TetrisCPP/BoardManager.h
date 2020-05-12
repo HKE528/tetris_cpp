@@ -15,13 +15,18 @@ private:
 		BLOCK
 	};
 
-	int board[WEDIT * HEIGHT];
+	int board[HEIGHT][WIDTH];
 	const char* shape[3] = { "бс", "  ", "бр" };
+
+	int spawnX;
+	int spawnY;
 
 private:
 	void gotoxy(int x, int y);
 
 public:
 	void DrawFrame();
+	void SetSpawn(int block[][4]);
+	void DrawBoard();
 };
 

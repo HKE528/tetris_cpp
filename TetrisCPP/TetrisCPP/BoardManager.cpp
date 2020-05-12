@@ -2,10 +2,10 @@
 
 BoardManager::BoardManager()
 {
-	for (int i = 0; i < WEDIT * HEIGHT; i++)
-	{
-		board[i] = 0;
-	}
+	memset(board, 0, HEIGHT * WIDTH);
+
+	spawnX = WIDTH / 2 - 2;
+	spawnY = 0;
 }
 
 BoardManager::~BoardManager()
@@ -27,15 +27,50 @@ void BoardManager::DrawFrame()
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			gotoxy(j * (WEDIT + 1), i);
+			gotoxy(j * (WIDTH + 1), i);
 			cout << shape[WELL];
 		}
-		cout << endl;
+		//cout << endl;
 	}
 
-	for (int i = 0; i < WEDIT + 2; i++)
+	for (int i = 0; i < WIDTH + 2; i++)
 	{
 		gotoxy(i, HEIGHT);
 		cout << shape[WELL];
 	}
 }
+
+void BoardManager::SetSpawn(int block[][4])
+{
+	//블록스폰 좌표 설정
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			board[spawnY + i][spawnX + j] = block[i][j];
+		}
+	}
+}
+
+void BoardManager::DrawBoard()
+{
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			gotoxy(j + X_OFFSET, i);
+			switch (board[i][j])
+			{
+			case 0:
+				cout << shape[EMPTY];
+				break;
+			case 1:
+				cout << shape[BLOCK];
+				break;
+			}
+		}
+	}
+
+}
+
+
