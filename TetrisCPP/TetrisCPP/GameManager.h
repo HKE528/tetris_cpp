@@ -1,6 +1,8 @@
 #pragma once
 #include "BoardManager.h"
 #include "BlockManager.h"
+#include "Controller.h"
+#include "Value.h"
 
 class GameManager
 {
@@ -11,11 +13,15 @@ public:
 private:
 	BoardManager boardManager;
 	BlockManager blockManager;
+	Controller controller;
 
 private:
 	void spawnBlock();
+	void InputKey(char key);
 
 public:
 	void Run();
+
+
 };
 

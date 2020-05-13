@@ -25,8 +25,10 @@ private:
 	void gotoxy(int x, int y);
 
 public:
-	void DrawFrame();
-	void SetSpawn(int block[][4]);
+	void SetFrame();
 	void DrawBoard();
+	Point SetSpawn(int block[][4]);
+	void DrawBlock(Point curPoint, Point movePoint, int curBlock[][4]);
+	
 };
 
