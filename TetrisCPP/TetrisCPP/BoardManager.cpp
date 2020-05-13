@@ -20,6 +20,8 @@ void BoardManager::gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
 }
 
+
+
 void BoardManager::SetFrame()
 {
 	//프레임 설정
@@ -61,10 +63,10 @@ void BoardManager::DrawBoard()
 				break;
 			}
 
-			/*cout << board[i][j] << " ";
+			//cout << board[i][j] << " ";
 		}
-		cout << endl;*/
-		}
+		//cout << endl;
+		
 	}
 
 }
@@ -83,11 +85,13 @@ Point BoardManager::SetSpawn(int block[][4])
 	return { spawnX, spawnY };
 }
 
-void BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4])
+Point BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4])
 {
-	int destX = curPoint.x + movePoint.x;
-	int destY = curPoint.y + movePoint.y;
+	bool isCollision = CheckCollision(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
 
+	int destX = isCollision ? curPoint.x : curPoint.x + movePoint.x;
+	int destY = isCollision ? curPoint.y : curPoint.y + movePoint.y;
+	
 	//이전 블록 지우기
 	for (int i = 0; i < 4; i++)
 	{
@@ -113,5 +117,20 @@ void BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4])
 			}
 		}
 	}
+
+	return { destX, destY };
 }
 
+bool BoardManager::CheckCollision(int curBlock[][4], Point destPoint)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (curBlock[i][j] == 1 && 
+				(board[destPoint.y + i][destPoint.x + j] == 1 || board[destPoint.y + i][destPoint.x + j] == 2))
+				return true;
+		}
+	}
+	return false;
+}
