@@ -48,26 +48,26 @@ void BoardManager::DrawBoard()
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
-			//gotoxy(j, i);
-			//switch (board[i][j])
-			//{
-			//case 0:
-			//	cout << shape[EMPTY];
-			//	//cout << 0;
-			//	break;
-			//case 1:
-			//	cout << shape[BLOCK];
-			//	//cout << 1;
-			//	break;
-			//case 2:
-			//	cout << shape[WELL];
-			//	//cout << 1;
-			//	break;
-			//}
+			gotoxy(j, i);
+			switch (board[i][j])
+			{
+			case 0:
+				cout << shape[EMPTY];
+				//cout << 0;
+				break;
+			case 1:
+				cout << shape[BLOCK];
+				//cout << 1;
+				break;
+			case 2:
+				cout << shape[WELL];
+				//cout << 1;
+				break;
+			}
 
-			cout << board[i][j] << " ";
+			//cout << board[i][j] << " ";
 		}
-		cout << endl;
+		//cout << endl;
 		
 	}
 
