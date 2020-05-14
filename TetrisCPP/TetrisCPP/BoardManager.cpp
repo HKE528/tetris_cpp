@@ -42,30 +42,32 @@ void BoardManager::SetFrame()
 
 void BoardManager::DrawBoard()
 {
+	system("cls");
+
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
-			gotoxy(j, i);
-			switch (board[i][j])
-			{
-			case 0:
-				cout << shape[EMPTY];
-				//cout << 0;
-				break;
-			case 1:
-				cout << shape[BLOCK];
-				//cout << 1;
-				break;
-			case 2:
-				cout << shape[WELL];
-				//cout << 1;
-				break;
-			}
+			//gotoxy(j, i);
+			//switch (board[i][j])
+			//{
+			//case 0:
+			//	cout << shape[EMPTY];
+			//	//cout << 0;
+			//	break;
+			//case 1:
+			//	cout << shape[BLOCK];
+			//	//cout << 1;
+			//	break;
+			//case 2:
+			//	cout << shape[WELL];
+			//	//cout << 1;
+			//	break;
+			//}
 
-			//cout << board[i][j] << " ";
+			cout << board[i][j] << " ";
 		}
-		//cout << endl;
+		cout << endl;
 		
 	}
 
@@ -113,7 +115,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 			for (int j = 0; j < 4; j++)
 			{
 				if (curBlock[i][j] == 1)
-					board[destX + j][destY + i] = 1;
+					board[curPoint.y + i][curPoint.x + j] = 1;
 			}
 		}
 
@@ -159,7 +161,7 @@ bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
 		for (int j = 0; j < 4; j++)
 		{
 			if (curBlock[i][j] == 1 && 
-				(board[destPoint.y + i][destPoint.x + j] == 1 || destPoint.y + i == HEIGHT - 2))
+				(board[destPoint.y + i][destPoint.x + j] == 1 || destPoint.y + i == HEIGHT - 1))
 				return true;
 		}
 	}
