@@ -16,6 +16,7 @@ private:
 	Controller controller;
 
 private:
+	void Start();
 	void spawnBlock();
 	void InputKey(char key);
 	void MoveBlock(char key);

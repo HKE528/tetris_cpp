@@ -9,6 +9,15 @@ GameManager::~GameManager()
 {
 }
 
+void GameManager::Start()
+{
+	boardManager.SetFrame();
+
+	boardManager.DrawBoard();
+
+	spawnBlock();
+}
+
 void GameManager::spawnBlock()
 {
 	int tempBlock[4][4] = { 0, };
@@ -17,14 +26,6 @@ void GameManager::spawnBlock()
 	Point curPoint = boardManager.SetSpawn(tempBlock);
 
 	blockManager.SetCurPoint(curPoint);
-
-	/*for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++)
-		{
-			cout << tempBlock[i][j];
-		}
-		cout << endl;
-	}*/
 }
 
 void GameManager::InputKey(char key)
@@ -34,9 +35,7 @@ void GameManager::InputKey(char key)
 	case DOWN:
 	case RIGHT:
 	case LEFT:
-
 		MoveBlock(key);
-
 		break;
 
 	case SPACE:
@@ -80,18 +79,11 @@ void GameManager::QuickDown()
 
 void GameManager::Run()
 {
-	boardManager.SetFrame();
-
-	boardManager.DrawBoard();
-
-	spawnBlock();
+	Start();
 
 	int key;
-	while (1)
+	while (!boardManager.CheckGameOver())
 	{
-		if (boardManager.CheckGameOver())
-			break;
-
 		if (_kbhit())
 		{
 			key = _getch();

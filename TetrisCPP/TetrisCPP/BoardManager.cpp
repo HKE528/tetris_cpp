@@ -2,6 +2,8 @@
 
 BoardManager::BoardManager()
 {
+	CursorView(0);
+
 	memset(board, 0, HEIGHT * WIDTH * sizeof(int));
 
 	spawnX = WIDTH / 2 - 2;
@@ -11,7 +13,18 @@ BoardManager::BoardManager()
 BoardManager::~BoardManager()
 {
 }
+void BoardManager::CursorView(char show)
+{
+	HANDLE hConsole;
+	CONSOLE_CURSOR_INFO ConsoleCursor;
 
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	ConsoleCursor.bVisible = show;
+	ConsoleCursor.dwSize = 1;
+
+	SetConsoleCursorInfo(hConsole, &ConsoleCursor);
+}
 void BoardManager::gotoxy(int x, int y)
 {
 	COORD Cur;
@@ -19,7 +32,6 @@ void BoardManager::gotoxy(int x, int y)
 	Cur.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
 }
-
 
 
 void BoardManager::SetFrame()
@@ -42,7 +54,7 @@ void BoardManager::SetFrame()
 
 void BoardManager::DrawBoard()
 {
-	system("cls");
+	//system("cls");
 
 	for (int i = 0; i < HEIGHT; i++)
 	{

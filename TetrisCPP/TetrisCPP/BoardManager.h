@@ -23,6 +23,7 @@ private:
 	int spawnY;
 
 private:
+	void CursorView(char show);
 	void gotoxy(int x, int y);
 	bool CheckWell(int curBlock[][4], Point destPoint);
 	bool CheckBlockCollision(int curBlock[][4], Point destPoint);
