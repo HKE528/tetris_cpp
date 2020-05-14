@@ -16,6 +16,7 @@ private:
 public:
 	void getBlcok(int temp[][4]);
 	void rotateBlock();
+	void rotateBlock(int temp[][4]);
 	Point GetCurPoint();
 	void SetCurPoint(Point point);
 	void MoveCurPoint(Point point);

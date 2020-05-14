@@ -42,5 +42,6 @@ public:
 	bool CheckGameOver();
 	void RemoveBlcok(int curBlock[][4], Point point);
 	void DrawBlcok(int curBlock[][4], Point point);
+	bool CheckRotatable(int curBlock[][4], Point point);
 };
 

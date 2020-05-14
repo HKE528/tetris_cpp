@@ -171,6 +171,11 @@ void BoardManager::DrawBlcok(int curBlock[][4], Point point)
 	DrawNextBlock(curBlock, point, BLOCK);
 }
 
+bool BoardManager::CheckRotatable(int curBlock[][4], Point point)
+{
+	return !(CheckWell(curBlock, point) || CheckBlockCollision(curBlock, point));
+}
+
 //고스트 그리기
 void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
 {

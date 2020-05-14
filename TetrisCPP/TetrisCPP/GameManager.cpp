@@ -67,14 +67,20 @@ void GameManager::RotateBlock()
 {
 	Point curPoint = blockManager.GetCurPoint();
 	int block[4][4] = { 0, };
+	int preBlock[4][4] = { 0, };
 	blockManager.getBlcok(block);
+	blockManager.getBlcok(preBlock);
 
-	boardManager.RemoveBlcok(block, curPoint);
+	blockManager.rotateBlock(preBlock);
+	if (boardManager.CheckRotatable(preBlock, curPoint))
+	{
+		boardManager.RemoveBlcok(block, curPoint);
 
-	blockManager.rotateBlock();
-	blockManager.getBlcok(block);
-	
-	boardManager.DrawBlcok(block, curPoint);
+		blockManager.rotateBlock();
+		blockManager.getBlcok(block);
+
+		boardManager.DrawBlcok(block, curPoint);
+	}
 }
 
 void GameManager::InputKey(char key)

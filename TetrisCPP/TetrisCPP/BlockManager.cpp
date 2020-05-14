@@ -93,3 +93,24 @@ void BlockManager::rotateBlock()
 		}
 	}
 }
+
+void BlockManager::rotateBlock(int temp[][4])
+{
+	int rotateBlock[4][4] = { 0, };
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			rotateBlock[j][3 - i] = temp[i][j];
+		}
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			temp[i][j] = rotateBlock[i][j];
+		}
+	}
+}
