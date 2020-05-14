@@ -102,7 +102,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 		{
 			if (curBlock[i][j] == 1)
 			{
-				DrawBlock(curPoint.x + j, curPoint.y + i, EMPTY);
+				DrawPixel(curPoint.x + j, curPoint.y + i, EMPTY);
 			}
 		}
 	}
@@ -131,7 +131,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 		{
 			if (curBlock[i][j] == 1)
 			{
-				DrawBlock(destX + j, destY + i, BLOCK);
+				DrawPixel(destX + j, destY + i, BLOCK);
 			}
 		}
 	}
@@ -168,7 +168,7 @@ bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
 	return false;
 }
 
-void BoardManager::DrawBlock(int x, int y, int figure)
+void BoardManager::DrawPixel(int x, int y, int figure)
 {
 	gotoxy(x, y);
 	cout << shape[figure];

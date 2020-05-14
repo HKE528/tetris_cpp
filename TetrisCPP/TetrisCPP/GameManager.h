@@ -18,6 +18,8 @@ private:
 private:
 	void spawnBlock();
 	void InputKey(char key);
+	void MoveBlock(char key);
+	void QuickDown();
 
 public:
 	void Run();

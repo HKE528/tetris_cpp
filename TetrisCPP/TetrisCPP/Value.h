@@ -22,5 +22,6 @@ enum KEY
 	UP = 72,
 	DOWN = 80,
 	RIGHT = 77,
-	LEFT = 75
+	LEFT = 75,
+	SPACE = 32
 };

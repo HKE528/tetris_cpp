@@ -29,41 +29,47 @@ void GameManager::spawnBlock()
 
 void GameManager::InputKey(char key)
 {
-	Point movePoint;
-
 	switch (key)
 	{
-	case UP:
 	case DOWN:
 	case RIGHT:
 	case LEFT:
-		movePoint = controller.MoveBlockPoint(key);
 
-		Point curPoint = blockManager.GetCurPoint();
-
-		int block[4][4] = { 0, };
-		blockManager.getBlcok(block);
-
-		curPoint = boardManager.MoveBlock(curPoint, movePoint, block);
-
-		if (curPoint.x < 0 && curPoint.y < 0)
-		{
-			spawnBlock();
-		}
-		else
-			blockManager.SetCurPoint(curPoint);
+		MoveBlock(key);
 
 		break;
+
+	case SPACE:
+		
 	}
+}
+
+void GameManager::MoveBlock(char key)
+{
+	Point movePoint = controller.MoveBlockPoint(key);
+	Point curPoint = blockManager.GetCurPoint();
+
+	int block[4][4] = { 0, };
+	blockManager.getBlcok(block);
+
+	curPoint = boardManager.MoveBlock(curPoint, movePoint, block);
+
+	if (curPoint.x < 0 && curPoint.y < 0)
+	{
+		spawnBlock();
+	}
+	else
+		blockManager.SetCurPoint(curPoint);
+
 }
 
 void GameManager::Run()
 {
-	boardManager.SetFrame();
+	/*boardManager.SetFrame();
 
 	boardManager.DrawBoard();
 
-	spawnBlock();
+	spawnBlock();*/
 
 	int key;
 	while (1)
@@ -74,6 +80,10 @@ void GameManager::Run()
 			if (key == 224)
 			{
 				key = _getch();
+				InputKey(key);
+			}
+			else
+			{
 				InputKey(key);
 			}
 		}
