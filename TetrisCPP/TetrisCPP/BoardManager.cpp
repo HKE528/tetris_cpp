@@ -96,28 +96,12 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	int destY = isCollision ? curPoint.y : curPoint.y + movePoint.y;
 
 	//이전 블록 지우기
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (curBlock[i][j] == 1)
-			{
-				DrawPixel(curPoint.x + j, curPoint.y + i, EMPTY);
-			}
-		}
-	}
+	RemovePreBlock(curBlock, curPoint);
 
 	//블록 충돌시 고정
 	if (isBlock)
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				if (curBlock[i][j] == 1)
-					board[curPoint.y + i][curPoint.x + j] = 1;
-			}
-		}
+		FixBlock(curBlock, curPoint);
 
 		DrawBoard();
 
@@ -125,16 +109,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	}
 
 	//블록 이동
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (curBlock[i][j] == 1)
-			{
-				DrawPixel(destX + j, destY + i, BLOCK);
-			}
-		}
-	}
+	DrawBlock(curBlock, { destX, destY });
 	
 	return { destX, destY };
 }
@@ -172,4 +147,46 @@ void BoardManager::DrawPixel(int x, int y, int figure)
 {
 	gotoxy(x, y);
 	cout << shape[figure];
+}
+
+void BoardManager::RemovePreBlock(int curBlock[][4], Point point)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (curBlock[i][j] == 1)
+			{
+				DrawPixel(point.x + j, point.y + i, EMPTY);
+			}
+		}
+	}
+}
+
+void BoardManager::DrawBlock(int curBlock[][4], Point point)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (curBlock[i][j] == 1)
+			{
+				DrawPixel(point.x + j, point.y + i, BLOCK);
+			}
+		}
+	}
+}
+
+void BoardManager::FixBlock(int curBlock[][4], Point point)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (curBlock[i][j] == 1)
+				board[point.y + i][point.x + j] = 1;
+		}
+	}
+
+	DrawBoard();
 }

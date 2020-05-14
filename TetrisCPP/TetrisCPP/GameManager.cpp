@@ -40,7 +40,7 @@ void GameManager::InputKey(char key)
 		break;
 
 	case SPACE:
-		
+		break;
 	}
 }
 
@@ -65,11 +65,11 @@ void GameManager::MoveBlock(char key)
 
 void GameManager::Run()
 {
-	/*boardManager.SetFrame();
+	boardManager.SetFrame();
 
 	boardManager.DrawBoard();
 
-	spawnBlock();*/
+	spawnBlock();
 
 	int key;
 	while (1)

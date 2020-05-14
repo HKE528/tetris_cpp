@@ -27,6 +27,8 @@ private:
 	void DrawPixel(int x, int y, int shape);
 	void RemovePreBlock(int curBlock[][4], Point point);
 	void DrawBlock(int curBlock[][4], Point point);
+	void FixBlock(int curBlock[][4], Point point);
+	
 
 public:
 	void SetFrame();
