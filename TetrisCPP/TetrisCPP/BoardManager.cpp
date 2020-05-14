@@ -92,11 +92,14 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	bool isCollision = CheckWell(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
 	bool isBlock = CheckBlockCollision(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
 
+	//Point destPoint = isCollision ? curPoint : curPoint + movePoint;
+
 	int destX = isCollision ? curPoint.x : curPoint.x + movePoint.x;
 	int destY = isCollision ? curPoint.y : curPoint.y + movePoint.y;
 
 	//이전 블록 지우기
 	RemovePreBlock(curBlock, curPoint);
+	DrawGhost(curBlock, curPoint, EMPTY);
 
 	//블록 충돌시 고정
 	if (isBlock)
@@ -109,9 +112,24 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	}
 
 	//블록 이동
-	DrawBlock(curBlock, { destX, destY });
+	DrawGhost(curBlock, { destX, destY }, GHOST);
+	DrawBlock(curBlock, { destX, destY }, BLOCK);
+	
 	
 	return { destX, destY };
+}
+
+void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
+{
+	Point down = { 0, 1 };
+	Point ghostPoint = curPoint;
+
+	while (!CheckBlockCollision(curBlock, ghostPoint + down))
+	{
+		ghostPoint = ghostPoint + down;
+	}
+
+	DrawBlock(curBlock, ghostPoint, shapeIndex);
 }
 
 //벽 감지
@@ -163,7 +181,7 @@ void BoardManager::RemovePreBlock(int curBlock[][4], Point point)
 	}
 }
 
-void BoardManager::DrawBlock(int curBlock[][4], Point point)
+void BoardManager::DrawBlock(int curBlock[][4], Point point, int block)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -171,7 +189,7 @@ void BoardManager::DrawBlock(int curBlock[][4], Point point)
 		{
 			if (curBlock[i][j] == 1)
 			{
-				DrawPixel(point.x + j, point.y + i, BLOCK);
+				DrawPixel(point.x + j, point.y + i, block);
 			}
 		}
 	}

@@ -25,3 +25,5 @@ enum KEY
 	LEFT = 75,
 	SPACE = 32
 };
+
+Point operator+ (Point A, Point b);
