@@ -20,32 +20,14 @@ void GameManager::Start()
 
 void GameManager::spawnBlock()
 {
+	blockManager.SpawnBlock();
+
 	int tempBlock[4][4] = { 0, };
 
 	blockManager.getBlcok(tempBlock);
 	Point curPoint = boardManager.SetSpawn(tempBlock);
 
 	blockManager.SetCurPoint(curPoint);
-}
-
-void GameManager::InputKey(char key)
-{
-	switch (key)
-	{
-	case DOWN:
-	case RIGHT:
-	case LEFT:
-		MoveBlock(key);
-		break;
-
-	case SPACE:
-		QuickDown();
-		break;
-
-	case UP:
-		RotateBlock();
-		break;
-	}
 }
 
 void GameManager::MoveBlock(char key)
@@ -93,6 +75,26 @@ void GameManager::RotateBlock()
 	blockManager.getBlcok(block);
 	
 	boardManager.DrawBlcok(block, curPoint);
+}
+
+void GameManager::InputKey(char key)
+{
+	switch (key)
+	{
+	case DOWN:
+	case RIGHT:
+	case LEFT:
+		MoveBlock(key);
+		break;
+
+	case SPACE:
+		QuickDown();
+		break;
+
+	case UP:
+		RotateBlock();
+		break;
+	}
 }
 
 void GameManager::Run()

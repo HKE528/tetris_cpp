@@ -4,6 +4,7 @@
 #include<Windows.h>
 #include<vector>
 #include<conio.h>
+#include<time.h>
 
 #define WIDTH 12
 #define HEIGHT 21
