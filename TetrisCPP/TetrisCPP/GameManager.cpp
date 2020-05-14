@@ -41,6 +41,10 @@ void GameManager::InputKey(char key)
 	case SPACE:
 		QuickDown();
 		break;
+
+	case UP:
+		RotateBlock();
+		break;
 	}
 }
 
@@ -75,6 +79,20 @@ void GameManager::QuickDown()
 	boardManager.MoveBlock(curPoint, { 0, 1 }, block);
 
 	spawnBlock();
+}
+
+void GameManager::RotateBlock()
+{
+	Point curPoint = blockManager.GetCurPoint();
+	int block[4][4] = { 0, };
+	blockManager.getBlcok(block);
+
+	boardManager.RemoveBlcok(block, curPoint);
+
+	blockManager.rotateBlock();
+	blockManager.getBlcok(block);
+	
+	boardManager.DrawBlcok(block, curPoint);
 }
 
 void GameManager::Run()

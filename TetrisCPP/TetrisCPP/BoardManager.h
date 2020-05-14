@@ -29,7 +29,7 @@ private:
 	bool CheckBlockCollision(int curBlock[][4], Point destPoint);
 	void DrawPixel(int x, int y, int shape);
 	void RemovePreBlock(int curBlock[][4], Point point);
-	void DrawBlock(int curBlock[][4], Point point, int block);
+	void DrawNextBlock(int curBlock[][4], Point point, int block);
 	void FixBlock(int curBlock[][4], Point point);
 	void DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex);
 
@@ -40,6 +40,7 @@ public:
 	Point MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]);
 	Point GetGhostPoint(int curBlock[][4], Point point);
 	bool CheckGameOver();
-	
+	void RemoveBlcok(int curBlock[][4], Point point);
+	void DrawBlcok(int curBlock[][4], Point point);
 };
 

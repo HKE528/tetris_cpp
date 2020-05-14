@@ -21,6 +21,7 @@ private:
 	void InputKey(char key);
 	void MoveBlock(char key);
 	void QuickDown();
+	void RotateBlock();
 
 public:
 	void Run();

@@ -13,6 +13,8 @@ BoardManager::BoardManager()
 BoardManager::~BoardManager()
 {
 }
+
+//커서 설정
 void BoardManager::CursorView(char show)
 {
 	HANDLE hConsole;
@@ -25,6 +27,8 @@ void BoardManager::CursorView(char show)
 
 	SetConsoleCursorInfo(hConsole, &ConsoleCursor);
 }
+
+//좌표 이동
 void BoardManager::gotoxy(int x, int y)
 {
 	COORD Cur;
@@ -52,6 +56,7 @@ void BoardManager::SetFrame()
 	}
 }
 
+//게임 보드 그리기
 void BoardManager::DrawBoard()
 {
 	//system("cls");
@@ -99,6 +104,7 @@ Point BoardManager::SetSpawn(int block[][4])
 	return { spawnX, spawnY };
 }
 
+//블록 움직임
 Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4])
 {
 	bool isCollision = CheckWell(curBlock, curPoint + movePoint);
@@ -107,8 +113,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	Point destPoint = isCollision ? curPoint : curPoint + movePoint;
 
 	//이전 블록 지우기
-	RemovePreBlock(curBlock, curPoint);
-	DrawGhost(curBlock, curPoint, EMPTY);
+	RemoveBlcok(curBlock, curPoint);
 
 	//블록 충돌시 고정
 	if (isBlock)
@@ -121,10 +126,8 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	}
 
 	//블록 이동
-	DrawGhost(curBlock, destPoint, GHOST);
-	DrawBlock(curBlock, destPoint, BLOCK);
-	
-	
+	DrawBlcok(curBlock, destPoint);
+		
 	return destPoint;
 }
 
@@ -142,6 +145,7 @@ Point BoardManager::GetGhostPoint(int curBlock[][4], Point point)
 	return ghostPoint;
 }
 
+//게임 오버 체크
 bool BoardManager::CheckGameOver()
 {
 	for (int i = 0; i < WIDTH; i++)
@@ -153,12 +157,26 @@ bool BoardManager::CheckGameOver()
 	return false;
 }
 
+//블록 + 고스트 제거
+void BoardManager::RemoveBlcok(int curBlock[][4], Point point)
+{
+	RemovePreBlock(curBlock, point);
+	DrawGhost(curBlock, point, EMPTY);
+}
+
+//블록 + 고스트 그리기
+void BoardManager::DrawBlcok(int curBlock[][4], Point point)
+{
+	DrawGhost(curBlock, point, GHOST);
+	DrawNextBlock(curBlock, point, BLOCK);
+}
+
 //고스트 그리기
 void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
 {
 	Point ghostPoint = GetGhostPoint(curBlock, curPoint);
 
-	DrawBlock(curBlock, ghostPoint, shapeIndex);
+	DrawNextBlock(curBlock, ghostPoint, shapeIndex);
 }
 
 //벽 감지
@@ -190,12 +208,14 @@ bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
 	return false;
 }
 
+//블록에 사용되는 박스 하나 그리기
 void BoardManager::DrawPixel(int x, int y, int figure)
 {
 	gotoxy(x, y);
 	cout << shape[figure];
 }
 
+//이전 블록 지우기
 void BoardManager::RemovePreBlock(int curBlock[][4], Point point)
 {
 	for (int i = 0; i < 4; i++)
@@ -210,7 +230,8 @@ void BoardManager::RemovePreBlock(int curBlock[][4], Point point)
 	}
 }
 
-void BoardManager::DrawBlock(int curBlock[][4], Point point, int block)
+//블록 그리기
+void BoardManager::DrawNextBlock(int curBlock[][4], Point point, int block)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -224,6 +245,7 @@ void BoardManager::DrawBlock(int curBlock[][4], Point point, int block)
 	}
 }
 
+//충돌된 블록 고정
 void BoardManager::FixBlock(int curBlock[][4], Point point)
 {
 	for (int i = 0; i < 4; i++)
