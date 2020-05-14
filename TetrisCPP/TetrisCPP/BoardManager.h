@@ -37,6 +37,8 @@ public:
 	void DrawBoard();
 	Point SetSpawn(int block[][4]);
 	Point MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]);
+	Point GetGhostPoint(int curBlock[][4], Point point);
+	bool CheckGameOver();
 	
 };
 

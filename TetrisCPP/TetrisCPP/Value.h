@@ -26,4 +26,5 @@ enum KEY
 	SPACE = 32
 };
 
-Point operator+ (Point A, Point b);
+Point operator+ (Point A, Point B);
+Point operator- (Point A, Point B);

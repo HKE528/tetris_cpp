@@ -40,6 +40,7 @@ void GameManager::InputKey(char key)
 		break;
 
 	case SPACE:
+		QuickDown();
 		break;
 	}
 }
@@ -63,6 +64,20 @@ void GameManager::MoveBlock(char key)
 
 }
 
+void GameManager::QuickDown()
+{
+	int block[4][4] = { 0, };
+	blockManager.getBlcok(block);
+
+	Point curPoint = blockManager.GetCurPoint();
+	Point destPoint = boardManager.GetGhostPoint(block, curPoint);
+
+	curPoint = boardManager.MoveBlock(curPoint, destPoint - curPoint, block);
+	boardManager.MoveBlock(curPoint, { 0, 1 }, block);
+
+	spawnBlock();
+}
+
 void GameManager::Run()
 {
 	boardManager.SetFrame();
@@ -74,6 +89,9 @@ void GameManager::Run()
 	int key;
 	while (1)
 	{
+		if (boardManager.CheckGameOver())
+			break;
+
 		if (_kbhit())
 		{
 			key = _getch();

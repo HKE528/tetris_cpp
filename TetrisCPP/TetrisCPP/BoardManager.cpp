@@ -89,13 +89,10 @@ Point BoardManager::SetSpawn(int block[][4])
 
 Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4])
 {
-	bool isCollision = CheckWell(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
-	bool isBlock = CheckBlockCollision(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
+	bool isCollision = CheckWell(curBlock, curPoint + movePoint);
+	bool isBlock = CheckBlockCollision(curBlock, curPoint + movePoint);
 
-	//Point destPoint = isCollision ? curPoint : curPoint + movePoint;
-
-	int destX = isCollision ? curPoint.x : curPoint.x + movePoint.x;
-	int destY = isCollision ? curPoint.y : curPoint.y + movePoint.y;
+	Point destPoint = isCollision ? curPoint : curPoint + movePoint;
 
 	//이전 블록 지우기
 	RemovePreBlock(curBlock, curPoint);
@@ -112,22 +109,42 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	}
 
 	//블록 이동
-	DrawGhost(curBlock, { destX, destY }, GHOST);
-	DrawBlock(curBlock, { destX, destY }, BLOCK);
+	DrawGhost(curBlock, destPoint, GHOST);
+	DrawBlock(curBlock, destPoint, BLOCK);
 	
 	
-	return { destX, destY };
+	return destPoint;
 }
 
-void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
+//고스트 좌표 위치 얻기
+Point BoardManager::GetGhostPoint(int curBlock[][4], Point point)
 {
 	Point down = { 0, 1 };
-	Point ghostPoint = curPoint;
+	Point ghostPoint = point;
 
 	while (!CheckBlockCollision(curBlock, ghostPoint + down))
 	{
 		ghostPoint = ghostPoint + down;
 	}
+
+	return ghostPoint;
+}
+
+bool BoardManager::CheckGameOver()
+{
+	for (int i = 0; i < WIDTH; i++)
+	{
+		if (board[0][i] == 1)
+			return true;
+	}
+
+	return false;
+}
+
+//고스트 그리기
+void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
+{
+	Point ghostPoint = GetGhostPoint(curBlock, curPoint);
 
 	DrawBlock(curBlock, ghostPoint, shapeIndex);
 }
