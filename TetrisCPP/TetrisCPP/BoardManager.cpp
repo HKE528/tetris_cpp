@@ -78,20 +78,21 @@ Point BoardManager::SetSpawn(int block[][4])
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			DrawBlock({ spawnX, spawnY }, { 0,0 }, block);
+			MoveBlock({ spawnX, spawnY }, { 0,0 }, block);
 		}
 	}
 
 	return { spawnX, spawnY };
 }
 
-Point BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4])
+Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4])
 {
-	bool isCollision = CheckCollision(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
+	bool isCollision = CheckWell(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
+	bool isBlock = CheckBlockCollision(curBlock, { curPoint.x + movePoint.x, curPoint.y + movePoint.y });
 
 	int destX = isCollision ? curPoint.x : curPoint.x + movePoint.x;
 	int destY = isCollision ? curPoint.y : curPoint.y + movePoint.y;
-	
+
 	//이전 블록 지우기
 	for (int i = 0; i < 4; i++)
 	{
@@ -99,10 +100,26 @@ Point BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4]
 		{
 			if (curBlock[i][j] == 1)
 			{
-				gotoxy(curPoint.x + j, curPoint.y + i);
-				cout << shape[EMPTY];
+				DrawBlock(curPoint.x + j, curPoint.y + i, EMPTY);
 			}
 		}
+	}
+
+	//블록 충돌시 고정
+	if (isBlock)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				if (curBlock[i][j] == 1)
+					board[destX + j][destY + i] = 1;
+			}
+		}
+
+		DrawBoard();
+
+		return { -1, -1 };
 	}
 
 	//블록 이동
@@ -112,25 +129,45 @@ Point BoardManager::DrawBlock(Point curPoint, Point movePoint, int curBlock[][4]
 		{
 			if (curBlock[i][j] == 1)
 			{
-				gotoxy(destX + j, destY + i);
-				cout << shape[BLOCK];
+				DrawBlock(destX + j, destY + i, BLOCK);
 			}
 		}
 	}
-
+	
 	return { destX, destY };
 }
 
-bool BoardManager::CheckCollision(int curBlock[][4], Point destPoint)
+//벽 감지
+bool BoardManager::CheckWell(int curBlock[][4], Point destPoint)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (curBlock[i][j] == 1 && board[destPoint.y + i][destPoint.x + j] == 2)
+				return true;
+		}
+	}
+	return false;
+}
+
+//블록 충돌 or 마지막 라인 감지
+bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
 			if (curBlock[i][j] == 1 && 
-				(board[destPoint.y + i][destPoint.x + j] == 1 || board[destPoint.y + i][destPoint.x + j] == 2))
+				(board[destPoint.y + i][destPoint.x + j] == 1 || destPoint.y + i == HEIGHT - 2))
 				return true;
 		}
 	}
 	return false;
+}
+
+void BoardManager::DrawBlock(int x, int y, int figure)
+{
+	gotoxy(x, y);
+	cout << shape[figure];
 }

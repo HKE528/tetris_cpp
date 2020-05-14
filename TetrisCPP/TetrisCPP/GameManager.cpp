@@ -44,8 +44,14 @@ void GameManager::InputKey(char key)
 		int block[4][4] = { 0, };
 		blockManager.getBlcok(block);
 
-		curPoint = boardManager.DrawBlock(curPoint, movePoint, block);
-		blockManager.SetCurPoint(curPoint);
+		curPoint = boardManager.MoveBlock(curPoint, movePoint, block);
+
+		if (curPoint.x < 0 && curPoint.y < 0)
+		{
+			spawnBlock();
+		}
+		else
+			blockManager.SetCurPoint(curPoint);
 
 		break;
 	}
@@ -72,6 +78,4 @@ void GameManager::Run()
 			}
 		}
 	}
-
-	
 }
