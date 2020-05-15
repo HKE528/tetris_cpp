@@ -83,11 +83,6 @@ void GameManager::RotateBlock()
 	}
 }
 
-void GameManager::CheckLine()
-{
-	//boardManager.RemoveCompleteLine();
-}
-
 void GameManager::InputKey(char key)
 {
 	switch (key)

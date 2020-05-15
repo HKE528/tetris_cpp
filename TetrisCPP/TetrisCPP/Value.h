@@ -29,3 +29,4 @@ enum KEY
 
 Point operator+ (Point A, Point B);
 Point operator- (Point A, Point B);
+bool operator== (Point A, Point B);

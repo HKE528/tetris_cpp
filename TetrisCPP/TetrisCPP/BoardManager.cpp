@@ -107,8 +107,8 @@ Point BoardManager::SetSpawn(int block[][4])
 //블록 움직임
 Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4])
 {
-	bool isCollision = CheckWell(curBlock, curPoint + movePoint);
-	bool isBlock = CheckBlockCollision(curBlock, curPoint + movePoint);
+	bool isCollision = CheckCollision(curBlock, curPoint + movePoint);
+	bool isBlock = CheckBelow(curBlock, curPoint + movePoint);
 
 	Point destPoint = isCollision ? curPoint : curPoint + movePoint;
 
@@ -116,7 +116,7 @@ Point BoardManager::MoveBlock(Point curPoint, Point movePoint, int curBlock[][4]
 	RemoveBlcok(curBlock, curPoint);
 
 	//블록 충돌시 고정
-	if (isBlock)
+	if (isBlock && movePoint == Point{ 0, 1 })
 	{
 		FixBlock(curBlock, curPoint);
 
@@ -137,7 +137,7 @@ Point BoardManager::GetGhostPoint(int curBlock[][4], Point point)
 	Point down = { 0, 1 };
 	Point ghostPoint = point;
 
-	while (!CheckBlockCollision(curBlock, ghostPoint + down))
+	while (!CheckBelow(curBlock, ghostPoint + down))
 	{
 		ghostPoint = ghostPoint + down;
 	}
@@ -174,7 +174,7 @@ void BoardManager::DrawBlcok(int curBlock[][4], Point point)
 //회전 가능 체크
 bool BoardManager::CheckRotatable(int curBlock[][4], Point point)
 {
-	return !(CheckWell(curBlock, point) || CheckBlockCollision(curBlock, point));
+	return !(CheckCollision(curBlock, point) || CheckBelow(curBlock, point));
 }
 
 //고스트 그리기
@@ -231,13 +231,16 @@ void BoardManager::RemoveLine(int y)
 }
 
 //벽 감지
-bool BoardManager::CheckWell(int curBlock[][4], Point destPoint)
+bool BoardManager::CheckCollision(int curBlock[][4], Point destPoint)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			if (curBlock[i][j] == 1 && board[destPoint.y + i][destPoint.x + j] == 2)
+			//if (curBlock[i][j] == 1 && board[destPoint.y + i][destPoint.x + j] == 2)
+			//	return true;
+			if (curBlock[i][j] == 1 && 
+				(board[destPoint.y + i][destPoint.x + j] == 2 || board[destPoint.y + i][destPoint.x + j] == 1))
 				return true;
 		}
 	}
@@ -245,7 +248,7 @@ bool BoardManager::CheckWell(int curBlock[][4], Point destPoint)
 }
 
 //블록 충돌 or 마지막 라인 감지
-bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
+bool BoardManager::CheckBelow(int curBlock[][4], Point destPoint)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -256,6 +259,7 @@ bool BoardManager::CheckBlockCollision(int curBlock[][4], Point destPoint)
 				return true;
 		}
 	}
+
 	return false;
 }
 

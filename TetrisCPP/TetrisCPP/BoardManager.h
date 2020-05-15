@@ -25,8 +25,8 @@ private:
 private:
 	void CursorView(char show);
 	void gotoxy(int x, int y);
-	bool CheckWell(int curBlock[][4], Point destPoint);
-	bool CheckBlockCollision(int curBlock[][4], Point destPoint);
+	bool CheckCollision(int curBlock[][4], Point destPoint);
+	bool CheckBelow(int curBlock[][4], Point destPoint);
 	void DrawPixel(int x, int y, int shape);
 	void RemovePreBlock(int curBlock[][4], Point point);
 	void DrawNextBlock(int curBlock[][4], Point point, int block);
