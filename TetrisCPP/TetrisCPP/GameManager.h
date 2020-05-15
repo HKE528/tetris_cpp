@@ -19,6 +19,7 @@ private:
 	Controller controller;
 	UI ui;
 	Info info;
+	bool isBlock;
 
 private:
 	void Start();

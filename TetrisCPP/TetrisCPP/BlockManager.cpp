@@ -3,6 +3,7 @@
 BlockManager::BlockManager()
 {
 	curBlock = 0;
+	nextBlock = GetRandomInt();
 }
 
 BlockManager::~BlockManager()
@@ -48,13 +49,14 @@ int BlockManager::GetRandomInt()
 		num[y] = temp;
 	}
 
-	//return num[0];
-	return 3;
+	return num[0];
+	//return 3;
 }
 
 void BlockManager::SetCurBlock()
 {
-	curBlock = GetRandomInt();
+	curBlock = nextBlock;
+	nextBlock = GetRandomInt();
 	int rotate = GetRandomInt();
 
 	while (rotate--)
@@ -70,6 +72,17 @@ void BlockManager::getBlcok(int temp[][4])
 		for (int j = 0; j < 4; j++)
 		{
 			temp[i][j] = block[curBlock][i][j];
+		}
+	}
+}
+
+void BlockManager::getNextBlcok(int temp[][4])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			temp[i][j] = block[nextBlock][i][j];
 		}
 	}
 }

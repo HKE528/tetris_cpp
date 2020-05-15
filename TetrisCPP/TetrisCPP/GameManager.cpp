@@ -5,6 +5,7 @@ GameManager::GameManager()
 	info.level = 1;
 	info.score = 0;
 	info.speed = 2000;
+	isBlock = true;
 }
 
 GameManager::~GameManager()
@@ -14,7 +15,7 @@ GameManager::~GameManager()
 void GameManager::Start()
 {
 	int block[4][4] = { 0, };
-	blockManager.getBlcok(block);
+	blockManager.getNextBlcok(block);
 
 	ui.GameUI(info, block);
 
@@ -36,6 +37,8 @@ void GameManager::spawnBlock()
 	Point curPoint = boardManager.SetSpawn(tempBlock);
 
 	blockManager.SetCurPoint(curPoint);
+
+	SetGameInfo();
 }
 
 void GameManager::MoveBlock(char key)
@@ -50,7 +53,7 @@ void GameManager::MoveBlock(char key)
 
 	if (curPoint.x < 0 && curPoint.y < 0)
 	{
-		spawnBlock();
+		isBlock = false;
 	}
 	else
 		blockManager.SetCurPoint(curPoint);
@@ -68,7 +71,7 @@ void GameManager::QuickDown()
 	curPoint = boardManager.MoveBlock(curPoint, destPoint - curPoint, block);
 	boardManager.MoveBlock(curPoint, { 0, 1 }, block);
 
-	spawnBlock();
+	isBlock = false;
 }
 
 void GameManager::RotateBlock()
@@ -98,9 +101,6 @@ void GameManager::BlockDown()
 		Sleep(info.speed);
 
 		MoveBlock(DOWN);
-		/*cout << info.level << endl;
-		cout << info.score << endl;
-		cout << info.speed << endl;*/
 	}
 }
 
@@ -113,7 +113,11 @@ void GameManager::SetGameInfo()
 	else
 		info.speed = 2200 - info.level * 300;
 
+	int block[4][4] = { 0, };
+	blockManager.getNextBlcok(block);
+
 	ui.UpdateScore(info);
+	ui.UpdateNextBlock(block);
 }
 
 void GameManager::InputKey(char key)
@@ -124,12 +128,10 @@ void GameManager::InputKey(char key)
 	case RIGHT:
 	case LEFT:
 		MoveBlock(key);
-		SetGameInfo();
 		break;
 
 	case SPACE:
 		QuickDown();
-		SetGameInfo();
 		break;
 
 	case UP:
@@ -150,6 +152,12 @@ void GameManager::Run()
 	int key;
 	while (!boardManager.CheckGameOver())
 	{
+		if (!isBlock)
+		{
+			isBlock = true;
+			spawnBlock();
+		}
+
 		if (_kbhit())
 		{
 			key = _getch();

@@ -54,15 +54,6 @@ void UI::ShowNextBlock(int nextBlock[][4])
 		}
 	}
 
-	for (int i = 1; i < 7; i++)
-	{
-		for (int j = 1; j < 7; j++)
-		{
-			//gotoxy(WIDTH + j + 1, i);
-			boardManager.DrawPixel(WIDTH + j + 1, i, boardManager.EMPTY);
-		}
-	}
-
 	//다음 블럭 표시 프레임
 	UpdateNextBlock(nextBlock);
 }
@@ -99,5 +90,14 @@ void UI::UpdateScore(Info info)
 
 void UI::UpdateNextBlock(int nextBlock[][4])
 {
-	boardManager.DrawNextBlock(nextBlock, { WIDTH + 4, 2 }, boardManager.BLOCK);
+	for (int i = 1; i < 7; i++)
+	{
+		for (int j = 1; j < 7; j++)
+		{
+			//gotoxy(WIDTH + j + 1, i);
+			boardManager.DrawPixel(WIDTH + j + 1, i, boardManager.EMPTY);
+		}
+	}
+
+	boardManager.DrawNextBlock(nextBlock, { WIDTH + 3, 2 }, boardManager.BLOCK);
 }

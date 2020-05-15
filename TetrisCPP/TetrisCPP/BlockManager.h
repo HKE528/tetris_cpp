@@ -10,11 +10,15 @@ public:
 private:
 	int curBlock;
 	Point curPoint;
+	int nextBlock;
+
+private:
 	int GetRandomInt();
 	void SetCurBlock();
 
 public:
 	void getBlcok(int temp[][4]);
+	void getNextBlcok(int temp[][4]);
 	void rotateBlock();
 	void rotateBlock(int temp[][4]);
 	Point GetCurPoint();
