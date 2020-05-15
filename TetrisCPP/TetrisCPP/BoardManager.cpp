@@ -8,6 +8,7 @@ BoardManager::BoardManager()
 
 	spawnX = WIDTH / 2 - 2;
 	spawnY = 0;
+	calScore = 0;
 }
 
 BoardManager::~BoardManager()
@@ -189,16 +190,21 @@ void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
 void BoardManager::RemoveCompleteLine(Point point)
 {
 	int check = 3;
+	int score = 0;
+	int count = 1;
 
 	while (check >= 0)
 	{
 		if (CheckLine(point.y + check))
 		{
 			RemoveLine(point.y + check);
+			score += 100 * count++;
 		}
 		else
 			check--;
 	}
+
+	calScore = score;
 }
 
 //라인 검사
@@ -228,6 +234,14 @@ void BoardManager::RemoveLine(int y)
 			board[i][j] = board[i - 1][j];
 		}
 	}
+}
+
+int BoardManager::returnScore()
+{
+	int score = calScore;
+	calScore = 0;
+
+	return score;
 }
 
 //벽 감지

@@ -21,6 +21,7 @@ private:
 
 	int spawnX;
 	int spawnY;
+	int calScore;
 
 private:
 	void CursorView(char show);
@@ -46,5 +47,6 @@ public:
 	void DrawBlcok(int curBlock[][4], Point point);
 	bool CheckRotatable(int curBlock[][4], Point point);
 	void RemoveCompleteLine(Point point);
+	int returnScore();
 };
 

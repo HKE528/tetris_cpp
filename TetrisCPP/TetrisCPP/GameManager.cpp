@@ -2,6 +2,9 @@
 
 GameManager::GameManager()
 {
+	info.level = 1;
+	info.score = 1000;
+	info.speed = 2000;
 }
 
 GameManager::~GameManager()
@@ -15,6 +18,7 @@ void GameManager::Start()
 	boardManager.DrawBoard();
 
 	spawnBlock();
+
 }
 
 void GameManager::spawnBlock()
@@ -86,10 +90,23 @@ void GameManager::BlockDown()
 {
 	while (!boardManager.CheckGameOver())
 	{
-		Sleep(1000);
+		Sleep(info.speed);
 
-		MoveBlock(DOWN);	
+		MoveBlock(DOWN);
+		cout << info.level << endl;
+		cout << info.score << endl;
+		cout << info.speed << endl;
 	}
+}
+
+void GameManager::SetGameInfo()
+{
+	info.score = boardManager.returnScore();
+	info.level = info.score == 0 ? 1 : info.score / 5000;
+	if (info.speed < 100)
+		info.speed = 100;
+	else
+		info.speed = 2000 - info.level * 200;
 }
 
 void GameManager::InputKey(char key)
@@ -100,10 +117,12 @@ void GameManager::InputKey(char key)
 	case RIGHT:
 	case LEFT:
 		MoveBlock(key);
+		SetGameInfo();
 		break;
 
 	case SPACE:
 		QuickDown();
+		SetGameInfo();
 		break;
 
 	case UP:
@@ -120,7 +139,6 @@ void GameManager::Run()
 	function<void()> pBlockDown;
 	pBlockDown = bind(&GameManager::BlockDown, this);
 	thread blockDown(pBlockDown);
-
 
 	int key;
 	while (!boardManager.CheckGameOver())

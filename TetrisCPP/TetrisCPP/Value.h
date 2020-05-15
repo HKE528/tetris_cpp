@@ -18,6 +18,13 @@ typedef struct _Point
 	int y;
 }Point;
 
+typedef struct
+{
+	int level;
+	int score;
+	int speed;
+}Info;
+
 enum KEY
 {
 	UP = 72,

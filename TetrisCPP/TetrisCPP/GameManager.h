@@ -16,6 +16,7 @@ private:
 	BoardManager boardManager;
 	BlockManager blockManager;
 	Controller controller;
+	Info info;
 
 private:
 	void Start();
@@ -25,6 +26,7 @@ private:
 	void QuickDown();
 	void RotateBlock();
 	void BlockDown();
+	void SetGameInfo();
 
 public:
 	void Run();
