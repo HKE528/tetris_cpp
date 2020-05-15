@@ -3,7 +3,7 @@
 GameManager::GameManager()
 {
 	info.level = 1;
-	info.score = 1000;
+	info.score = 0;
 	info.speed = 2000;
 }
 
@@ -106,12 +106,12 @@ void GameManager::BlockDown()
 
 void GameManager::SetGameInfo()
 {
-	info.score = boardManager.returnScore();
-	info.level = info.score == 0 ? 1 : info.score / 5000;
+	info.score += boardManager.returnScore();
+	info.level = info.score < 2000 ? 1 : info.score / 2000 + 1;
 	if (info.speed < 100)
 		info.speed = 100;
 	else
-		info.speed = 2200 - info.level * 200;
+		info.speed = 2200 - info.level * 300;
 
 	ui.UpdateScore(info);
 }
