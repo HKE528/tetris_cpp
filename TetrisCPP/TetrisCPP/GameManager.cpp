@@ -106,7 +106,7 @@ void GameManager::SetGameInfo()
 	if (info.speed < 100)
 		info.speed = 100;
 	else
-		info.speed = 2000 - info.level * 200;
+		info.speed = 2200 - info.level * 200;
 }
 
 void GameManager::InputKey(char key)
