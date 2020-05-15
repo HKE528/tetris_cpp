@@ -3,6 +3,8 @@
 #include "BlockManager.h"
 #include "Controller.h"
 #include "Value.h"
+#include <thread>
+#include <functional>
 
 class GameManager
 {
@@ -22,6 +24,7 @@ private:
 	void MoveBlock(char key);
 	void QuickDown();
 	void RotateBlock();
+	void BlockDown();
 
 public:
 	void Run();

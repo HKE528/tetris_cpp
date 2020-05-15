@@ -2,7 +2,6 @@
 
 GameManager::GameManager()
 {
-
 }
 
 GameManager::~GameManager()
@@ -83,6 +82,16 @@ void GameManager::RotateBlock()
 	}
 }
 
+void GameManager::BlockDown()
+{
+	while (!boardManager.CheckGameOver())
+	{
+		Sleep(1000);
+
+		MoveBlock(DOWN);	
+	}
+}
+
 void GameManager::InputKey(char key)
 {
 	switch (key)
@@ -106,6 +115,12 @@ void GameManager::InputKey(char key)
 void GameManager::Run()
 {
 	Start();
+	
+	//BlockDown 스레드 생성
+	function<void()> pBlockDown;
+	pBlockDown = bind(&GameManager::BlockDown, this);
+	thread blockDown(pBlockDown);
+
 
 	int key;
 	while (!boardManager.CheckGameOver())
@@ -124,4 +139,6 @@ void GameManager::Run()
 			}
 		}
 	}
+
+	blockDown.join();
 }
