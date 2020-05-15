@@ -32,6 +32,8 @@ private:
 	void DrawNextBlock(int curBlock[][4], Point point, int block);
 	void FixBlock(int curBlock[][4], Point point);
 	void DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex);
+	bool CheckLine(int y);
+	void RemoveLine(int y);
 
 public:
 	void SetFrame();
@@ -43,5 +45,6 @@ public:
 	void RemoveBlcok(int curBlock[][4], Point point);
 	void DrawBlcok(int curBlock[][4], Point point);
 	bool CheckRotatable(int curBlock[][4], Point point);
+	void RemoveCompleteLine(Point point);
 };
 

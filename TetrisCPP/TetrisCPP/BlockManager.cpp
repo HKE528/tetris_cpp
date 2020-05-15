@@ -48,7 +48,8 @@ int BlockManager::GetRandomInt()
 		num[y] = temp;
 	}
 
-	return num[0];
+	//return num[0];
+	return 3;
 }
 
 void BlockManager::SetCurBlock()

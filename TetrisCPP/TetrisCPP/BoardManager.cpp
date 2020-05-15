@@ -171,6 +171,7 @@ void BoardManager::DrawBlcok(int curBlock[][4], Point point)
 	DrawNextBlock(curBlock, point, BLOCK);
 }
 
+//회전 가능 체크
 bool BoardManager::CheckRotatable(int curBlock[][4], Point point)
 {
 	return !(CheckWell(curBlock, point) || CheckBlockCollision(curBlock, point));
@@ -182,6 +183,51 @@ void BoardManager::DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex)
 	Point ghostPoint = GetGhostPoint(curBlock, curPoint);
 
 	DrawNextBlock(curBlock, ghostPoint, shapeIndex);
+}
+
+//완성된 라인 처리
+void BoardManager::RemoveCompleteLine(Point point)
+{
+	int check = 3;
+
+	while (check >= 0)
+	{
+		if (CheckLine(point.y + check))
+		{
+			RemoveLine(point.y + check);
+		}
+		else
+			check--;
+	}
+}
+
+//라인 검사
+bool BoardManager::CheckLine(int y)
+{
+	bool isCompleteLine = true;
+
+	for (int i = 1; i < WIDTH - 1; i++)
+	{
+		if (board[y][i] != 1)
+		{
+			isCompleteLine = false;
+			break;
+		}
+	}
+	
+	return isCompleteLine;
+}
+
+//라인 삭제 & 이동
+void BoardManager::RemoveLine(int y)
+{
+	for (int i = y; i > 0; i--)
+	{
+		for (int j = 1; j < WIDTH - 1; j++)
+		{
+			board[i][j] = board[i - 1][j];
+		}
+	}
 }
 
 //벽 감지
@@ -262,5 +308,6 @@ void BoardManager::FixBlock(int curBlock[][4], Point point)
 		}
 	}
 
+	RemoveCompleteLine(point);
 	DrawBoard();
 }
