@@ -8,7 +8,8 @@
 
 #define WIDTH 12
 #define HEIGHT 21
-#define X_OFFSET 1
+#define X_OFFSET 2
+#define Y_OFFSET 0
 
 using namespace std;
 
@@ -37,3 +38,4 @@ enum KEY
 Point operator+ (Point A, Point B);
 Point operator- (Point A, Point B);
 bool operator== (Point A, Point B);
+void gotoxy(int x, int y);

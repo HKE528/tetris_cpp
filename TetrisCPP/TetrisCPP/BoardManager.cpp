@@ -29,16 +29,6 @@ void BoardManager::CursorView(char show)
 	SetConsoleCursorInfo(hConsole, &ConsoleCursor);
 }
 
-//좌표 이동
-void BoardManager::gotoxy(int x, int y)
-{
-	COORD Cur;
-	Cur.X = x * 2;
-	Cur.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Cur);
-}
-
-
 void BoardManager::SetFrame()
 {
 	//프레임 설정

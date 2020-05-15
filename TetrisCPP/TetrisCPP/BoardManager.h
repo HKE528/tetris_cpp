@@ -6,8 +6,6 @@ class BoardManager
 public:
 	BoardManager();
 	~BoardManager();
-
-private:
 	enum Shape
 	{
 		WELL,
@@ -15,6 +13,9 @@ private:
 		BLOCK,
 		GHOST
 	};
+
+private:
+	
 
 	int board[HEIGHT][WIDTH];
 	const char* shape[4] = { "бс", "  ", "бр", "в├" };
@@ -25,12 +26,9 @@ private:
 
 private:
 	void CursorView(char show);
-	void gotoxy(int x, int y);
 	bool CheckCollision(int curBlock[][4], Point destPoint);
 	bool CheckBelow(int curBlock[][4], Point destPoint);
-	void DrawPixel(int x, int y, int shape);
 	void RemovePreBlock(int curBlock[][4], Point point);
-	void DrawNextBlock(int curBlock[][4], Point point, int block);
 	void FixBlock(int curBlock[][4], Point point);
 	void DrawGhost(int curBlock[][4], Point curPoint, int shapeIndex);
 	bool CheckLine(int y);
@@ -45,8 +43,10 @@ public:
 	bool CheckGameOver();
 	void RemoveBlcok(int curBlock[][4], Point point);
 	void DrawBlcok(int curBlock[][4], Point point);
+	void DrawNextBlock(int curBlock[][4], Point point, int block);
 	bool CheckRotatable(int curBlock[][4], Point point);
 	void RemoveCompleteLine(Point point);
 	int returnScore();
+	void DrawPixel(int x, int y, int shape);
 };
 

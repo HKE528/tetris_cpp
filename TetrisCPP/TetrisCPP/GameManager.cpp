@@ -13,6 +13,11 @@ GameManager::~GameManager()
 
 void GameManager::Start()
 {
+	int block[4][4] = { 0, };
+	blockManager.getBlcok(block);
+
+	ui.GameUI(info, block);
+
 	boardManager.SetFrame();
 
 	boardManager.DrawBoard();
@@ -93,9 +98,9 @@ void GameManager::BlockDown()
 		Sleep(info.speed);
 
 		MoveBlock(DOWN);
-		cout << info.level << endl;
+		/*cout << info.level << endl;
 		cout << info.score << endl;
-		cout << info.speed << endl;
+		cout << info.speed << endl;*/
 	}
 }
 
@@ -107,6 +112,8 @@ void GameManager::SetGameInfo()
 		info.speed = 100;
 	else
 		info.speed = 2200 - info.level * 200;
+
+	ui.UpdateScore(info);
 }
 
 void GameManager::InputKey(char key)

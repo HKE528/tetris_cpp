@@ -2,6 +2,7 @@
 #include "BoardManager.h"
 #include "BlockManager.h"
 #include "Controller.h"
+#include "UI.h"
 #include "Value.h"
 #include <thread>
 #include <functional>
@@ -16,6 +17,7 @@ private:
 	BoardManager boardManager;
 	BlockManager blockManager;
 	Controller controller;
+	UI ui;
 	Info info;
 
 private:
