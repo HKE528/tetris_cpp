@@ -122,13 +122,19 @@ void GameManager::SetGameInfo()
 
 bool GameManager::GameOver()
 {
-	ui.GameOver(info);
+	int key = NULL;
 
-	int key;
-	do
-	{
+	do {
+		ui.GameOver(info);
+
 		key = _getch();
-	} while (!(key == r || key == R || key == ESC));
+
+		if (key == S || key == s)
+		{
+			InputKey(key);
+			continue;
+		}
+	} while (!(key == R || key == r || key == ESC));
 	return InputKey(key);
 }
 
@@ -140,6 +146,11 @@ void GameManager::GameStart()
 	do {
 		key = _getch();
 	} while (!InputKey(key));
+}
+
+void GameManager::ShowRank()
+{
+	ui.ShowRank();
 }
 
 bool GameManager::InputKey(char key)
@@ -163,15 +174,18 @@ bool GameManager::InputKey(char key)
 	case R:
 	case r:
 		boardManager.Restart();
+		ui.SetIsRecord(false);
 		return true;
-		break;
 
 	case ESC:
 		return false;
-		break;
 
 	case ENTER:
 		return true;
+
+	case S:
+	case s:
+		ShowRank();
 		break;
 	}
 }
@@ -182,6 +196,7 @@ void GameManager::Run()
 
 	do
 	{
+		
 		Start();
 
 		//BlockDown 스레드 생성
@@ -214,6 +229,6 @@ void GameManager::Run()
 		}
 
 		blockDown.join();
-
+		
 	} while (GameOver());
 }

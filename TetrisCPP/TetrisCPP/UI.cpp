@@ -3,6 +3,7 @@
 UI::UI()
 {
 	system("mode con cols=50 lines=24");
+	isRecord = false;
 }
 
 UI::~UI()
@@ -137,12 +138,63 @@ void UI::UpdateNextBlock(int nextBlock[][4])
 	boardManager.DrawNextBlock(nextBlock, { WIDTH + 3, 2 }, boardManager.BLOCK);
 }
 
+void UI::ShowRank()
+{
+	system("cls");
+
+	IOManger io;
+	vector<Score> score = io.LoadScore();
+	
+	sort(score.begin(), score.end(), compare);
+
+	/*for (auto it = score.begin(); it != score.end(); it++)
+	{
+		cout << (*it).name << " " << (*it).score << endl;
+	}*/
+
+	for (int i = 0; i < WIDTH - 2; i++)
+		cout << "бс";
+	cout << " Ranking  ";
+	for (int i = 0; i < WIDTH - 2; i++)
+		cout << "бс";
+	cout << endl;
+
+	cout << "| Rank |         Name          |      Score      |" << endl;
+	for (int i = 0; i < WIDTH * 2 + 1; i++)
+		cout << "--";
+	cout << endl;
+	for (int i = 0; i < score.size() && i < 10; i++)
+	{
+		//cout << "бс ";
+		cout << "| " << setw(3) << i + 1 << ". |";
+		cout << setw(20) << score[i].name << "   |";
+		cout << setw(14) << score[i].score << "   |" << endl;
+		//cout << " бс" << endl;
+
+		for (int i = 0; i < WIDTH * 2 + 1; i++)
+			cout << "--";
+		cout << endl;
+	}
+	cout << "                   бч : Return";
+
+	while (1) {
+		int key = _getch();
+		if (key == BSPACE)
+			return;
+	}
+}
+
+void UI::SetIsRecord(bool flag)
+{
+	isRecord = flag;
+}
+
 void UI::GameOver(Info info)
 {
-	int speed = 700;
+	int speed = isRecord? 0 : 700;
 	system("cls");
 	
-	cout << "\n \n \n ";
+	cout << "\n";
 	cout << "       бсбсбс" << endl
 		<< "     бс" << endl
 		<< "     бс            бс        бс  бс    бсбсбс" << endl
@@ -152,7 +204,7 @@ void UI::GameOver(Info info)
 
 	Sleep(speed);
 	cout << "\n";
-	cout << "          бсбсбс" << endl
+	cout << "           бсбсбс" << endl
 		<< "         бс      бс" << endl
 		<< "         бс      бс  бс  бс  бсбсбс  бс  бс" << endl
 		<< "         бс      бс  бс  бс  бс  бс  бсбс" << endl
@@ -164,7 +216,27 @@ void UI::GameOver(Info info)
 	cout << "                     Level : " << info.level << endl;
 	cout << "                     Score : " << info.score << endl;
 
+	if (!isRecord)
+	{
+		Sleep(speed);
+		string name;
+		cout << "\n                     name : ";
+		cin >> name;
+
+		IOManger io;
+		if (io.SaveScore(name, info))
+		{
+			cout << "                   Record complete!" << endl;
+			isRecord = true;
+		}
+		else
+		{
+			cout << "                  Recording failure.." << endl;
+			isRecord = true;
+		}
+	}
+
 	Sleep(speed);
 	cout << "\n            Press the R key to restart!!" << endl;
-	cout << "                     ESC : Exit";
+	cout << "               S : Show Rank  ESC : Exit";
 }

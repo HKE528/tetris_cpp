@@ -32,6 +32,7 @@ private:
 	void SetGameInfo();
 	bool GameOver();
 	void GameStart();
+	void ShowRank();
 
 public:
 	void Run();

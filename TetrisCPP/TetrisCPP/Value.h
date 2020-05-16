@@ -5,6 +5,11 @@
 #include<vector>
 #include<conio.h>
 #include<time.h>
+#include <string>
+#include <vector>
+#include <queue>
+#include <sstream>
+#include<iomanip>
 
 #define WIDTH 12
 #define HEIGHT 21
@@ -26,6 +31,12 @@ typedef struct
 	int speed;
 }Info;
 
+typedef struct
+{
+	string name;
+	int score;
+}Score;
+
 enum KEY
 {
 	UP = 72,
@@ -36,10 +47,14 @@ enum KEY
 	R = 82,
 	r = 114,
 	ESC = 27,
-	ENTER = 13
+	ENTER = 13,
+	S = 83,
+	s = 115,
+	BSPACE = 8
 };
 
 Point operator+ (Point A, Point B);
 Point operator- (Point A, Point B);
 bool operator== (Point A, Point B);
 void gotoxy(int x, int y);
+bool compare(Score A, Score B);

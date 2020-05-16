@@ -1,6 +1,7 @@
 #pragma once
 #include "Value.h"
 #include "BoardManager.h"
+#include "IOManger.h"
 
 class UI
 {
@@ -10,6 +11,7 @@ public :
 
 private:
 	BoardManager boardManager;
+	bool isRecord;
 
 private:
 	void ShowScore(Info info);
@@ -22,5 +24,7 @@ public :
 	void GameOver(Info info);
 	void UpdateScore(Info info);
 	void UpdateNextBlock(int nextBlock[][4]);
+	void ShowRank();
+	void SetIsRecord(bool flag);
 };
 
