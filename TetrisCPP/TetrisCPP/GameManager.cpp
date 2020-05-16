@@ -120,7 +120,19 @@ void GameManager::SetGameInfo()
 	ui.UpdateNextBlock(block);
 }
 
-void GameManager::InputKey(char key)
+bool GameManager::GameOver()
+{
+	ui.GameOver();
+
+	int key;
+	do
+	{
+		key = _getch();
+	} while (!(key == r || key == R || key == ESC));
+	return InputKey(key);
+}
+
+bool GameManager::InputKey(char key)
 {
 	switch (key)
 	{
@@ -137,41 +149,55 @@ void GameManager::InputKey(char key)
 	case UP:
 		RotateBlock();
 		break;
+
+	case R:
+	case r:
+		boardManager.Restart();
+		return true;
+		break;
+
+	case ESC:
+		return false;
+		break;
 	}
 }
 
 void GameManager::Run()
 {
-	Start();
-	
-	//BlockDown 스레드 생성
-	function<void()> pBlockDown;
-	pBlockDown = bind(&GameManager::BlockDown, this);
-	thread blockDown(pBlockDown);
-
-	int key;
-	while (!boardManager.CheckGameOver())
+	do
 	{
-		if (!isBlock)
-		{
-			isBlock = true;
-			spawnBlock();
-		}
+		Start();
 
-		if (_kbhit())
+		//BlockDown 스레드 생성
+		function<void()> pBlockDown;
+		pBlockDown = bind(&GameManager::BlockDown, this);
+		thread blockDown(pBlockDown);
+
+		int key;
+		while (!boardManager.CheckGameOver())
 		{
-			key = _getch();
-			if (key == 224)
+			if (!isBlock)
+			{
+				isBlock = true;
+				spawnBlock();
+			}
+
+			if (_kbhit())
 			{
 				key = _getch();
-				InputKey(key);
-			}
-			else
-			{
-				InputKey(key);
+				if (key == 224)
+				{
+					key = _getch();
+					InputKey(key);
+				}
+				else
+				{
+					InputKey(key);
+				}
 			}
 		}
-	}
 
-	blockDown.join();
+		blockDown.join();
+
+	} while (GameOver());
 }

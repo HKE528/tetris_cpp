@@ -48,5 +48,6 @@ public:
 	void RemoveCompleteLine(Point point);
 	int returnScore();
 	void DrawPixel(int x, int y, int shape);
+	void Restart();
 };
 

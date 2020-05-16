@@ -141,7 +141,7 @@ bool BoardManager::CheckGameOver()
 {
 	for (int i = 0; i < WIDTH; i++)
 	{
-		if (board[0][i] == 1)
+		if (board[1][i] == 1)
 			return true;
 	}
 
@@ -272,6 +272,12 @@ void BoardManager::DrawPixel(int x, int y, int figure)
 {
 	gotoxy(x, y);
 	cout << shape[figure];
+}
+
+void BoardManager::Restart()
+{
+	system("cls");
+	memset(board, 0, HEIGHT * WIDTH * sizeof(int));
 }
 
 //이전 블록 지우기

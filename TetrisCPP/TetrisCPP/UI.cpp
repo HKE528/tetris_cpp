@@ -2,6 +2,7 @@
 
 UI::UI()
 {
+	system("mode con cols=50 lines=24");
 }
 
 UI::~UI()
@@ -100,4 +101,29 @@ void UI::UpdateNextBlock(int nextBlock[][4])
 	}
 
 	boardManager.DrawNextBlock(nextBlock, { WIDTH + 3, 2 }, boardManager.BLOCK);
+}
+
+void UI::GameOver()
+{
+	system("cls");
+	
+	cout << "\n \n \n ";
+	cout << "       бсбсбс" << endl
+		<< "     бс" << endl
+		<< "     бс            бс        бс  бс    бсбсбс" << endl
+		<< "     бс    бсбс  бс  бс    бс  бс  бс  бс  бс" << endl
+		<< "     бс      бс  бс  бс    бс  бс  бс  бсбс" << endl
+		<< "       бсбсбс      бсбсбс  бс  бс  бс  бсбсбс" << endl;
+
+	cout << "\n\n";
+	cout << "          бсбсбс" << endl
+		<< "         бс      бс" << endl
+		<< "         бс      бс  бс  бс  бсбсбс  бс  бс" << endl
+		<< "         бс      бс  бс  бс  бс  бс  бсбс" << endl
+		<< "         бс      бс  бс  бс  бсбс    бс" << endl
+		<< "           бсбсбс      бс    бсбсбс  бс" << endl;
+
+	cout << "\n\n";
+	cout << "            Press the R key to restart!!";
+	cout << "                               ESC : Exit";
 }
