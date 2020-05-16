@@ -19,7 +19,7 @@ private:
 public :
 	void StartUI();
 	void GameUI(Info info, int nextBlock[][4]);
-	void GameOver();
+	void GameOver(Info info);
 	void UpdateScore(Info info);
 	void UpdateNextBlock(int nextBlock[][4]);
 };

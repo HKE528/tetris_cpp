@@ -55,7 +55,7 @@ void UI::ShowNextBlock(int nextBlock[][4])
 		}
 	}
 
-	//다음 블럭 표시 프레임
+	//다음 블럭 표시
 	UpdateNextBlock(nextBlock);
 }
 
@@ -137,8 +137,9 @@ void UI::UpdateNextBlock(int nextBlock[][4])
 	boardManager.DrawNextBlock(nextBlock, { WIDTH + 3, 2 }, boardManager.BLOCK);
 }
 
-void UI::GameOver()
+void UI::GameOver(Info info)
 {
+	int speed = 700;
 	system("cls");
 	
 	cout << "\n \n \n ";
@@ -149,7 +150,8 @@ void UI::GameOver()
 		<< "     ■      ■  ■  ■    ■  ■  ■  ■■" << endl
 		<< "       ■■■      ■■■  ■  ■  ■  ■■■" << endl;
 
-	cout << "\n\n";
+	Sleep(speed);
+	cout << "\n";
 	cout << "          ■■■" << endl
 		<< "         ■      ■" << endl
 		<< "         ■      ■  ■  ■  ■■■  ■  ■" << endl
@@ -157,7 +159,12 @@ void UI::GameOver()
 		<< "         ■      ■  ■  ■  ■■    ■" << endl
 		<< "           ■■■      ■    ■■■  ■" << endl;
 
-	cout << "\n\n";
-	cout << "            Press the R key to restart!!";
-	cout << "                               ESC : Exit";
+	Sleep(speed);
+	cout << "\n";
+	cout << "                     Level : " << info.level << endl;
+	cout << "                     Score : " << info.score << endl;
+
+	Sleep(speed);
+	cout << "\n            Press the R key to restart!!" << endl;
+	cout << "                     ESC : Exit";
 }

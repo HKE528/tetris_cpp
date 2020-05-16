@@ -111,7 +111,7 @@ void GameManager::SetGameInfo()
 	if (info.speed < 100)
 		info.speed = 100;
 	else
-		info.speed = 2200 - info.level * 300;
+		info.speed = 2200 - info.level * 400;
 
 	int block[4][4] = { 0, };
 	blockManager.getNextBlcok(block);
@@ -122,7 +122,7 @@ void GameManager::SetGameInfo()
 
 bool GameManager::GameOver()
 {
-	ui.GameOver();
+	ui.GameOver(info);
 
 	int key;
 	do
