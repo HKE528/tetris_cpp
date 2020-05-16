@@ -31,6 +31,7 @@ private:
 	void BlockDown();
 	void SetGameInfo();
 	bool GameOver();
+	void GameStart();
 
 public:
 	void Run();

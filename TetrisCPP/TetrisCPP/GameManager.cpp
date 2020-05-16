@@ -132,6 +132,16 @@ bool GameManager::GameOver()
 	return InputKey(key);
 }
 
+void GameManager::GameStart()
+{
+	ui.StartUI();
+
+	int key;
+	do {
+		key = _getch();
+	} while (!InputKey(key));
+}
+
 bool GameManager::InputKey(char key)
 {
 	switch (key)
@@ -159,11 +169,17 @@ bool GameManager::InputKey(char key)
 	case ESC:
 		return false;
 		break;
+
+	case ENTER:
+		return true;
+		break;
 	}
 }
 
 void GameManager::Run()
 {
+	GameStart();
+
 	do
 	{
 		Start();

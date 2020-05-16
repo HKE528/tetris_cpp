@@ -71,6 +71,40 @@ void UI::FillFrame()
 	}
 }
 
+void UI::StartUI()
+{
+	int speed = 50;
+	cout << "\n\n\n";
+	cout << "  бсбсбсбсбс                        бс        " << endl;
+	Sleep(speed);
+	cout << "      бс              бс    бс  бс        бсбс" << endl;
+	Sleep(speed);
+	cout << "      бс    бсбсбс  бсбсбс  бсбс    бс  бс    " << endl;
+	Sleep(speed);
+	cout << "      бс    бс  бс    бс    бс      бс    бс  " << endl;
+	Sleep(speed);
+	cout << "      бс    бсбс      бс    бс      бс      бс" << endl;
+	Sleep(speed);
+	cout << "      бс    бсбсбс    бс    бс      бс  бсбс  " << endl;
+	
+	cout << "\n\n";
+	Sleep(speed);
+	cout << "              бсбсбс  бсбсбс    бсбсбс    " << endl;
+	Sleep(speed);
+	cout << "            бс        бс    бс  бс    бс  " << endl;
+	Sleep(speed);
+	cout << "            бс        бсбсбс    бсбсбс    " << endl;
+	Sleep(speed);
+	cout << "            бс        бс        бс        " << endl;
+	Sleep(speed);
+	cout << "              бсбсбс  бс        бс        " << endl;
+
+	cout << "\n\n";
+	Sleep(speed);
+	cout << "              Thank yor for Playing!!" << endl;
+	cout << "\n                  Enter to Start" << endl;
+}
+
 void UI::GameUI(Info info, int nextBlock[][4])
 {
 	FillFrame();

@@ -32,7 +32,11 @@ enum KEY
 	DOWN = 80,
 	RIGHT = 77,
 	LEFT = 75,
-	SPACE = 32
+	SPACE = 32,
+	R = 82,
+	r = 114,
+	ESC = 27,
+	ENTER = 13
 };
 
 Point operator+ (Point A, Point B);
