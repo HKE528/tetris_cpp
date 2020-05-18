@@ -18,7 +18,7 @@ private:
 	
 
 	int board[HEIGHT][WIDTH];
-	const char* shape[4] = { "бс", "  ", "бр", "в├" };
+	const char* shape[4] = { "бс", "  ", "в├", "бр" };
 
 	int spawnX;
 	int spawnY;
