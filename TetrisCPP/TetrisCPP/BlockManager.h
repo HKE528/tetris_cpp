@@ -23,7 +23,7 @@ public:
 	void rotateBlock(int temp[][4]);
 	Point GetCurPoint();
 	void SetCurPoint(Point point);
-	void MoveCurPoint(Point point);
+	//void MoveCurPoint(Point point);
 	void SpawnBlock();
 
 

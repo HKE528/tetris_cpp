@@ -17,15 +17,16 @@ Point BlockManager::GetCurPoint()
 
 void BlockManager::SetCurPoint(Point point)
 {
+
 	curPoint.x = point.x;
 	curPoint.y = point.y;
 }
 
-void BlockManager::MoveCurPoint(Point point)
-{
-	curPoint.x += point.x;
-	curPoint.y += point.y;
-}
+//void BlockManager::MoveCurPoint(Point point)
+//{
+//	curPoint.x += point.x;
+//	curPoint.y += point.y;
+//}
 
 void BlockManager::SpawnBlock()
 {

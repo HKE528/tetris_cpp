@@ -2,18 +2,25 @@
 
 GameManager::GameManager()
 {
+	InitializeCriticalSection(&cs);
+
 	info.level = 1;
 	info.score = 0;
-	info.speed = 2000;
+	info.speed = 3000;
 	isBlock = true;
 }
 
 GameManager::~GameManager()
 {
+	DeleteCriticalSection(&cs);
 }
 
 void GameManager::Start()
 {
+	info.level = 1;
+	info.score = 0;
+	info.speed = 3000;
+
 	int block[4][4] = { 0, };
 	blockManager.getNextBlcok(block);
 
@@ -39,16 +46,17 @@ void GameManager::spawnBlock()
 	blockManager.SetCurPoint(curPoint);
 
 	SetGameInfo();
+	isBlock = true;
 }
 
 void GameManager::MoveBlock(char key)
 {
 	Point movePoint = controller.MoveBlockPoint(key);
-	Point curPoint = blockManager.GetCurPoint();
-
 	int block[4][4] = { 0, };
 	blockManager.getBlcok(block);
 
+	EnterCriticalSection(&cs);
+	Point curPoint = blockManager.GetCurPoint();
 	curPoint = boardManager.MoveBlock(curPoint, movePoint, block);
 
 	if (curPoint.x < 0 && curPoint.y < 0)
@@ -57,7 +65,7 @@ void GameManager::MoveBlock(char key)
 	}
 	else
 		blockManager.SetCurPoint(curPoint);
-
+	LeaveCriticalSection(&cs);
 }
 
 void GameManager::QuickDown()
@@ -100,18 +108,24 @@ void GameManager::BlockDown()
 	{
 		Sleep(info.speed);
 
-		MoveBlock(DOWN);
+		if(isBlock)
+			MoveBlock(DOWN);
 	}
 }
 
 void GameManager::SetGameInfo()
 {
 	info.score += boardManager.returnScore();
-	info.level = info.score < 2000 ? 1 : info.score / 2000 + 1;
-	if (info.speed < 100)
-		info.speed = 100;
+
+	if (info.level >= 10)
+		info.level = 10;
+	else 
+		info.level = info.score < 2000 ? 1 : info.score / 2000 + 1;
+
+	if (info.speed <= 50)
+		info.speed = 50;
 	else
-		info.speed = 2200 - info.level * 400;
+		info.speed = 3050 - info.level * 300;
 
 	int block[4][4] = { 0, };
 	blockManager.getNextBlcok(block);
@@ -145,7 +159,7 @@ void GameManager::GameStart()
 	int key;
 	do {
 		key = _getch();
-	} while (!InputKey(key));
+	} while (key != ENTER);
 }
 
 void GameManager::ShowRank()
@@ -209,7 +223,6 @@ void GameManager::Run()
 		{
 			if (!isBlock)
 			{
-				isBlock = true;
 				spawnBlock();
 			}
 

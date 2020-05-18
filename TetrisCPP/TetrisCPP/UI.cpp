@@ -144,14 +144,14 @@ void UI::ShowRank()
 
 	IOManger io;
 	vector<Score> score = io.LoadScore();
-	
+
 	sort(score.begin(), score.end(), compare);
 
 	/*for (auto it = score.begin(); it != score.end(); it++)
 	{
 		cout << (*it).name << " " << (*it).score << endl;
 	}*/
-
+	
 	for (int i = 0; i < WIDTH - 2; i++)
 		cout << "бс";
 	cout << " Ranking  ";
@@ -220,7 +220,7 @@ void UI::GameOver(Info info)
 	{
 		Sleep(speed);
 		string name;
-		cout << "\n                     name : ";
+		cout << "\n                     Name : ";
 		cin >> name;
 
 		IOManger io;

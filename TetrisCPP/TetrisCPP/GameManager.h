@@ -14,6 +14,7 @@ public:
 	~GameManager();
 
 private:
+	CRITICAL_SECTION cs;
 	BoardManager boardManager;
 	BlockManager blockManager;
 	Controller controller;
